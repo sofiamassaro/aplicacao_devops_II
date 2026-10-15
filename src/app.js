@@ -14,6 +14,11 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' })
 })
 
+// nova rota - autoria do projeto 
+app.get('/sobre', (req, res) => {
+  res.json({ projeto: 'cesusc-devops', autora: 'Sofia' })
+})
+
 // Só sobe o servidor quando o arquivo é executado diretamente
 // (node src/app.js). Nos testes, o app é importado sem abrir a porta.
 if (require.main === module) {

@@ -21,6 +21,12 @@ describe('Rotas da aplicação', () => {
     expect(res.body).toEqual({ status: 'ok' })
   })
 
+    test('GET /sobre retorna informações do projeto', async () => {
+    const res = await request(app).get('/sobre')
+    expect(res.statusCode).toBe(200)
+    expect(res.body.projeto).toBe('cesusc-devops')
+  })
+
   test('rota inexistente retorna 404', async () => {
     const res = await request(app).get('/nao-existe')
     expect(res.statusCode).toBe(404)
