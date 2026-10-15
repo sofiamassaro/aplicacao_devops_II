@@ -1,0 +1,25 @@
+# Deploy automático na EC2 a cada push na main.
+# Só funciona depois de cadastrar os secrets EC2_HOST e EC2_SSH_KEY
+# em Settings > Secrets and variables > Actions.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Atualizar a aplicação na EC2 via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/cesusc-devops
+            git pull origin main
+            npm install --omit=dev
+            pm2 restart app
